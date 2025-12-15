@@ -4375,6 +4375,19 @@ async function loadGameLibrary() {
         updateClockDisplay();
         updateEventsList();
         setInterval(updateSidebar, 100);
+    <script>
+  // Make the login/signup panels toggle correctly
+  window.showSignup = function () {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("signupForm").style.display = "block";
+  };
+
+  window.showLogin = function () {
+    document.getElementById("signupForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+  };
+</script>
+
 </script>
 </body>
 </html>
