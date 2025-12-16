@@ -4375,18 +4375,47 @@ async function loadGameLibrary() {
         updateClockDisplay();
         updateEventsList();
         setInterval(updateSidebar, 100);
-    
-  // Make the login/signup panels toggle correctly
-  window.showSignup = function () {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("signupForm").style.display = "block";
-  };
 
-  window.showLogin = function () {
-    document.getElementById("signupForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-  };
-    
+// ==================== EXPOSE FUNCTIONS GLOBALLY ====================
+// Make ALL functions available to inline onclick handlers
+window.showLogin = showLogin;
+window.showSignup = showSignup;
+window.handleLogin = handleLogin;
+window.handleSignup = handleSignup;
+window.handleLogout = handleLogout;
+window.startNewGame = startNewGame;
+window.confirmLeaveGame = confirmLeaveGame;
+window.saveGameNow = saveGameNow;
+window.showGameLibrary = showGameLibrary;
+window.loadGame = loadGame;
+window.deleteGame = deleteGame;
+window.showScreen = showScreen;
+window.setPeriod = setPeriod;
+window.setStrength = setStrength;
+window.startClock = startClock;
+window.pauseClock = pauseClock;
+window.resetClock = resetClock;
+window.setClockManual = setClockManual;
+window.closeClockEditor = closeClockEditor;
+window.logGoal = logGoal;
+window.logShot = logShot;
+window.openFaceoffModal = openFaceoffModal;
+window.setFaceoffZone = setFaceoffZone;
+window.setFaceoffResult = setFaceoffResult;
+window.setFaceoffClean = setFaceoffClean;
+window.saveFaceoff = saveFaceoff;
+window.openLineEditor = openLineEditor;
+window.saveLineConfig = saveLineConfig;
+window.loadLineConfig = loadLineConfig;
+window.openConfigModal = openConfigModal;
+window.saveGameInfo = saveGameInfo;
+window.importVideoTimestamps = importVideoTimestamps;
+window.closeModal = closeModal;
+window.exportCSV = exportCSV;
+window.exportPDF = exportPDF;
+window.clearData = clearData;
+window.toggleLine = toggleLine;
+window.togglePlayer = togglePlayer;
 </script>
 </body>
 </html>
