@@ -2823,6 +2823,34 @@
         updateClockDisplay();
         updateEventsList();
         setInterval(updateSidebar, 100);
+
+        // Expose game tracker functions globally
+        window.setPeriod = setPeriod;
+        window.setStrength = setStrength;
+        window.startClock = startClock;
+        window.pauseClock = pauseClock;
+        window.resetClock = resetClock;
+        window.setClockManual = setClockManual;
+        window.closeClockEditor = closeClockEditor;
+        window.logGoal = logGoal;
+        window.logShot = logShot;
+        window.openFaceoffModal = openFaceoffModal;
+        window.setFaceoffZone = setFaceoffZone;
+        window.setFaceoffResult = setFaceoffResult;
+        window.setFaceoffClean = setFaceoffClean;
+        window.saveFaceoff = saveFaceoff;
+        window.openLineEditor = openLineEditor;
+        window.saveLineConfig = saveLineConfig;
+        window.loadLineConfig = loadLineConfig;
+        window.openConfigModal = openConfigModal;
+        window.saveGameInfo = saveGameInfo;
+        window.importVideoTimestamps = importVideoTimestamps;
+        window.closeModal = closeModal;
+        window.exportCSV = exportCSV;
+        window.exportPDF = exportPDF;
+        window.clearData = clearData;
+        window.toggleLine = toggleLine;
+        window.togglePlayer = togglePlayer;
     </script>
 </div>
 
