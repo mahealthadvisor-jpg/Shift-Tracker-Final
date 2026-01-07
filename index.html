@@ -40,6 +40,123 @@
             padding: 20px;
         }
         
+        /* TEAM SELECTOR STARTUP MODAL */
+        .team-startup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .team-startup-modal {
+            background: var(--rink-dark);
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid var(--line-blue);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .team-startup-modal h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2rem;
+            color: var(--line-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .team-startup-modal p {
+            color: var(--bench-gray);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .quick-team-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-team-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--bench-gray);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-team-btn:hover {
+            background: var(--line-blue);
+            border-color: var(--line-blue);
+        }
+        
+        .team-input-wrapper {
+            margin-bottom: 25px;
+        }
+        
+        .team-input-wrapper label {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        
+        .team-input-wrapper input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--bench-gray);
+            color: var(--text-light);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .team-input-wrapper input:focus {
+            outline: none;
+            border-color: var(--line-blue);
+        }
+        
+        .btn-start-tracking {
+            width: 100%;
+            padding: 15px;
+            background: var(--active-green);
+            color: var(--rink-darker);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-start-tracking:hover {
+            background: #00ff88;
+        }
+        
+        .btn-start-tracking:disabled {
+            background: var(--bench-gray);
+            cursor: not-allowed;
+        }
+        
         .container {
             max-width: 1800px;
             margin: 0 auto;
@@ -862,13 +979,34 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- TEAM SELECTOR STARTUP MODAL -->
+    <div class="team-startup-overlay" id="teamStartupOverlay">
+        <div class="team-startup-modal">
+            <h2>🏒 Shift Tracker</h2>
+            <p>Enter your team name to get started</p>
+            
+            <div class="quick-team-btns">
+                <button class="quick-team-btn" onclick="document.getElementById('teamNameInput').value='Newburyport'">Newburyport</button>
+                <button class="quick-team-btn" onclick="document.getElementById('teamNameInput').value='Triton'">Triton</button>
+                <button class="quick-team-btn" onclick="document.getElementById('teamNameInput').value='Amesbury'">Amesbury</button>
+            </div>
+            
+            <div class="team-input-wrapper">
+                <label>Team Name:</label>
+                <input type="text" id="teamNameInput" placeholder="Enter team name..." autofocus>
+            </div>
+            
+            <button class="btn-start-tracking" id="btnStartTracking">Start Tracking</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
         <header>
             <h1>Shift Tracker Complete</h1>
             <div class="subtitle">Professional Ice Time & Event Tracking System</div>
             <div class="score-display">
                 <div class="team-score">
-                    <div class="team-name">Newburyport</div>
+                    <div class="team-name" id="homeTeamName">Newburyport</div>
                     <div class="score-number us" id="scoreUs">0</div>
                 </div>
                 <div class="score-divider">-</div>
@@ -931,7 +1069,7 @@
             <div class="sidebar">
                 <div class="stats-panel">
                     <div class="panel-title">Quick Events</div>
-                    <div style="font-size: 0.75rem; color: var(--bench-gray); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Newburyport</div>
+                    <div style="font-size: 0.75rem; color: var(--bench-gray); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;" id="homeEventsLabel">Newburyport</div>
                     <div class="event-logger">
                         <button class="event-btn goal">⚫ GOAL</button>
                         <button class="event-btn">🏒 SHOT</button>
@@ -959,7 +1097,7 @@
                         <span class="stat-value warning" id="longShifts">0</span>
                     </div>
                     <div class="stat-row">
-                        <span class="stat-label">NBC Goals</span>
+                        <span class="stat-label" id="homeGoalsLabel">NBC Goals</span>
                         <span class="stat-value" id="ourGoals" style="color: var(--active-green);">0</span>
                     </div>
                     <div class="stat-row">
@@ -967,7 +1105,7 @@
                         <span class="stat-value" id="theirGoals" style="color: var(--pk-red);">0</span>
                     </div>
                     <div class="stat-row">
-                        <span class="stat-label">NBC Shots</span>
+                        <span class="stat-label" id="homeShotsLabel">NBC Shots</span>
                         <span class="stat-value" id="ourShots">0</span>
                     </div>
                     <div class="stat-row">
@@ -1088,6 +1226,48 @@
     </div>
     
     <script>
+        // ==================== TEAM NAME SETUP ====================
+        let TEAM_NAME = 'Newburyport';
+        let TEAM_ABBR = 'NBC';
+        
+        document.getElementById('btnStartTracking').addEventListener('click', () => {
+            const teamInput = document.getElementById('teamNameInput').value.trim();
+            if (teamInput) {
+                TEAM_NAME = teamInput;
+                
+                // Create abbreviation (first 3 letters, uppercase)
+                TEAM_ABBR = teamInput.substring(0, 3).toUpperCase();
+                
+                // Update all team name labels
+                document.getElementById('homeTeamName').textContent = TEAM_NAME;
+                document.getElementById('homeEventsLabel').textContent = TEAM_NAME;
+                document.getElementById('homeGoalsLabel').textContent = `${TEAM_ABBR} Goals`;
+                document.getElementById('homeShotsLabel').textContent = `${TEAM_ABBR} Shots`;
+                
+                // Hide startup modal and show main app
+                document.getElementById('teamStartupOverlay').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                
+                // Initialize the tracker
+                initializeTracker();
+            }
+        });
+        
+        // Allow Enter key to start tracking
+        document.getElementById('teamNameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('btnStartTracking').click();
+            }
+        });
+        
+        function initializeTracker() {
+            renderLines();
+            updateClockDisplay();
+            updateEventsList();
+            setInterval(updateSidebar, 100);
+        }
+        
+        // ==================== REST OF ORIGINAL CODE ====================
         let gameData = {
             gameInfo: {
                 date: '',
@@ -1556,7 +1736,7 @@
                 const clockMin = Math.floor(e.gameClock / 60);
                 const clockSec = e.gameClock % 60;
                 const clock = `${clockMin}:${String(clockSec).padStart(2, '0')}`;
-                const teamLabel = e.team === 'us' ? 'NBC' : 'OPP';
+                const teamLabel = e.team === 'us' ? TEAM_ABBR : 'OPP';
                 
                 // Build player info - handle both null and empty cases
                 let playerInfo = '';
@@ -1844,7 +2024,7 @@
                 const clockSec = event.gameClock % 60;
                 const clock = `${clockMin}:${String(clockSec).padStart(2, '0')}`;
                 const time = new Date(event.time).toLocaleTimeString();
-                const team = event.team === 'us' ? 'NBC' : 'OPP';
+                const team = event.team === 'us' ? TEAM_ABBR : 'OPP';
                 const player = (event.playerNumber && event.playerNumber.toString().trim()) 
                     ? (event.playerName ? `#${event.playerNumber} ${event.playerName}` : `#${event.playerNumber}`)
                     : '';
@@ -1855,7 +2035,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `shift-tracker-${gameData.gameInfo.date || new Date().toISOString().slice(0,10)}.csv`;
+            a.download = `shift-tracker-${TEAM_NAME}-${gameData.gameInfo.date || new Date().toISOString().slice(0,10)}.csv`;
             a.click();
         }
         
@@ -1871,7 +2051,7 @@
             const ourGoals = gameData.events.filter(e => e.type === 'goal' && e.team === 'us').length;
             const theirGoals = gameData.events.filter(e => e.type === 'goal' && e.team === 'them').length;
             doc.setFontSize(16);
-            doc.text(`Final Score: Newburyport ${ourGoals} - ${theirGoals} ${gameData.gameInfo.opponent || 'Opponent'}`, 105, 22, { align: 'center' });
+            doc.text(`Final Score: ${TEAM_NAME} ${ourGoals} - ${theirGoals} ${gameData.gameInfo.opponent || 'Opponent'}`, 105, 22, { align: 'center' });
             
             // Game Info
             doc.setFontSize(12);
@@ -2045,7 +2225,7 @@
                         const clockMin = Math.floor(e.gameClock / 60);
                         const clockSec = e.gameClock % 60;
                         const clock = `${clockMin}:${String(clockSec).padStart(2, '0')}`;
-                        const team = e.team === 'us' ? 'NBC' : gameData.gameInfo.opponent || 'OPP';
+                        const team = e.team === 'us' ? TEAM_NAME : gameData.gameInfo.opponent || 'OPP';
                         
                         let player = 'Unknown';
                         if (e.playerNumber && e.playerNumber.toString().trim() !== '') {
@@ -2076,7 +2256,7 @@
                     doc.text('Team Totals', 20, teamYPos);
                     
                     const teamData = [
-                        ['Newburyport', ourGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'us').length],
+                        [TEAM_NAME, ourGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'us').length],
                         [gameData.gameInfo.opponent || 'Opponent', theirGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'them').length]
                     ];
                     
@@ -2095,7 +2275,7 @@
                     doc.text('Team Totals', 20, yPos);
                     
                     const teamData = [
-                        ['Newburyport', ourGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'us').length],
+                        [TEAM_NAME, ourGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'us').length],
                         [gameData.gameInfo.opponent || 'Opponent', theirGoals, gameData.events.filter(e => e.type === 'shot' && e.team === 'them').length]
                     ];
                     
@@ -2286,7 +2466,7 @@
                 });
             }
             
-            doc.save(`shift-tracker-${gameData.gameInfo.date || new Date().toISOString().slice(0,10)}.pdf`);
+            doc.save(`shift-tracker-${TEAM_NAME}-${gameData.gameInfo.date || new Date().toISOString().slice(0,10)}.pdf`);
         }
         
         function clearData() {
@@ -2311,14 +2491,7 @@
             updateEventsList();
         }
         
-        // Initialize
-        renderLines();
-        updateClockDisplay();
-        updateEventsList();
-        setInterval(updateSidebar, 100);
-        
         // ==================== EVENT LISTENERS ====================
-        // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🏒 Setting up all event listeners...');
             
@@ -2427,9 +2600,6 @@
             }
             
             console.log('✅ All event listeners connected!');
-            
-            // Re-render lines to attach player/line click handlers
-            renderLines();
         });
     </script>
 </body>
